@@ -1,8 +1,11 @@
 import Router from './Pages/Router'
+import { StyledEngineProvider } from '@mui/material'
 const App = () => {
   return (
     <>
-      <Router />
+      <StyledEngineProvider injectFirst>
+        <Router />
+      </StyledEngineProvider>
     </>
   )
 }

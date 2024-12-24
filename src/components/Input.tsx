@@ -1,7 +1,21 @@
 import React from 'react'
-
-const Input = () => {
-  ;<div>input</div>
+import { TextField } from '@mui/material'
+interface Iinput {
+  label: string
+  value: string
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void
+}
+const Input: React.FC<Iinput> = ({ label, value, onChange }) => {
+  return (
+    <TextField
+      label={label}
+      value={value}
+      onChange={(e) => onChange(e)}
+      name={label}
+    />
+  )
 }
 
 export default Input
