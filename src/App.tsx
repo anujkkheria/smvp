@@ -1,10 +1,12 @@
 import Router from './Pages/Router'
-import { StyledEngineProvider } from '@mui/material'
+import { StyledEngineProvider, CssBaseline } from '@mui/material'
 const App = () => {
   return (
     <>
       <StyledEngineProvider injectFirst>
-        <Router />
+        <CssBaseline>
+          <Router />
+        </CssBaseline>
       </StyledEngineProvider>
     </>
   )

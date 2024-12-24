@@ -5,6 +5,14 @@ interface IButton {
   onClick: () => void
 }
 const RoundedButton: React.FC<IButton> = ({ label, onClick }) => {
-  return <Button onClick={() => onClick()}>{label}</Button>
+  return (
+    <Button
+      className='rounded-3xl'
+      onClick={() => onClick()}
+      variant='contained'
+    >
+      {label}
+    </Button>
+  )
 }
 export default RoundedButton
