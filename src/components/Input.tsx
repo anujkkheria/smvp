@@ -10,6 +10,7 @@ interface Iinput {
 const Input: React.FC<Iinput> = ({ label, value, onChange }) => {
   return (
     <TextField
+      className='h-1/4'
       label={label}
       value={value}
       onChange={(e) => onChange(e)}

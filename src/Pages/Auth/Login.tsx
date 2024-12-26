@@ -18,7 +18,7 @@ const Login = () => {
     })
   }
   return (
-    <div className='size-4/5 bg-slate-200 p-8 flex flex-col justify-center'>
+    <div className='max-w-md mx-auto bg-slate-200 p-8 flex flex-col justify-center'>
       <h2 className='text-center'>Login</h2>
       <div className='flex flex-col gap-10 justify-center'>
         <Input label={'email'} value={loginOptions.email} onChange={onChange} />
@@ -27,7 +27,7 @@ const Login = () => {
           value={loginOptions.password}
           onChange={onChange}
         />
-        <div className='flex justify-between px-3'>
+        <div className='flex justify-between gap-12 px-3'>
           <div>Remember me</div>
           <div>Forgot Password</div>
         </div>

@@ -24,9 +24,9 @@ const Signup = () => {
     })
   }
   return (
-    <div className='size-11/12  bg-slate-200 p-4 flex flex-col'>
+    <div className='max-w-md mx-auto h-auto bg-slate-200 p-6 flex flex-col justify-center'>
       <h2 className='text-center'>Signup</h2>
-      <div className='size-full flex flex-col gap-6 justify-center'>
+      <div className='flex flex-col gap-6 justify-center'>
         <Input
           label={'email'}
           value={signupOptions.email}
@@ -42,11 +42,7 @@ const Signup = () => {
           value={signupOptions.confirmPassword}
           onChange={onChange}
         />
-        <Input
-          label='role'
-          value={signupOptions.confirmPassword}
-          onChange={onChange}
-        />
+        <Input label='role' value={signupOptions.role} onChange={onChange} />
         <Input
           label='organization'
           value={signupOptions.organization}
