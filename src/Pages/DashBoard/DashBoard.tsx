@@ -28,10 +28,25 @@ const Dashboard = () => {
     setUsers(users.filter((user) => user.id !== id))
   }
 
+  const handleAdd = (newUser: Omit<(typeof users)[0], 'id'>) => {
+    setUsers((prev) => [
+      ...prev,
+      {
+        ...newUser,
+        id: Math.max(...prev.map((user) => user.id)) + 1,
+      },
+    ])
+  }
+
   return (
     <div className='p-6'>
       <h1 className='text-2xl font-semibold mb-6'>Users</h1>
-      <Table data={users} onEdit={handleEdit} onDelete={handleDelete} />
+      <Table
+        data={users}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onAdd={handleAdd}
+      />
     </div>
   )
 }
