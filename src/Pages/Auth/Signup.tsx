@@ -43,11 +43,6 @@ const Signup = () => {
           onChange={onChange}
         />
         <Input label='role' value={signupOptions.role} onChange={onChange} />
-        <Input
-          label='organization'
-          value={signupOptions.organization}
-          onChange={onChange}
-        />
         <RoundedButton label={'Submit'} onClick={() => {}} />
       </div>
     </div>
