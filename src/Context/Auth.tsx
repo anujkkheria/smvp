@@ -1,25 +1,11 @@
 import React, { createContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-interface AuthContextType {
-  user: User | null
-  isLoading: boolean
-  login: (email: string, password: string) => Promise<void>
-  logout: () => Promise<void>
-  signup: (
-    email: string,
-    password: string,
-    name: string,
-    role: string
-  ) => Promise<void>
-}
-
-interface User {
-  id: string
-  email: string
-  name: string
-  token: string
-}
+import {
+  AuthContextType,
+  ILoginOptions,
+  ISignupoptions,
+  User,
+} from '../types/interfaces'
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
@@ -28,8 +14,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const Baseurl = import.meta.env.VITE_BASE_URL
   const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const navigate = useNavigate()
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+  // const navigate = useNavigate()
 
   // useEffect(() => {
   //   // Check for stored token on mount
@@ -62,14 +48,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   //   }
   // }
 
-  const login = async (email: string, password: string) => {
+  const login = async (loginOptions: ILoginOptions) => {
     try {
       const response = await fetch(`${Baseurl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ ...loginOptions }),
       })
 
       if (!response.ok) {
@@ -77,22 +63,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       const data = await response.json()
+      setIsLoggedIn(true)
       localStorage.setItem('token', data.token)
       setUser(data)
-      navigate('/dashboard')
     } catch (error) {
       throw new Error('Login failed')
     }
   }
 
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (signupOptions: ISignupoptions) => {
     try {
       const response = await fetch(`${Baseurl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify(signupOptions),
       })
 
       if (!response.ok) {
@@ -100,34 +86,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       const data = await response.json()
-      localStorage.setItem('token', data.token)
-      setUser(data)
-      navigate('/dashboard')
+      console.log(data)
+      // localStorage.setItem('user', .token)
+      // setUser(data)
+      // navigate('/dashboard')
     } catch (error) {
       throw new Error('Registration failed')
     }
   }
 
   const logout = async () => {
-    try {
-      // Optional: Call logout endpoint if your API requires it
-      if (user?.token) {
-        await fetch('YOUR_API_URL/auth/logout', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-      }
-    } finally {
-      localStorage.removeItem('token')
-      setUser(null)
-      navigate('/login')
-    }
+    // try {
+    // Optional: Call logout endpoint if your API requires it
+    //   if (user?.token) {
+    //     await fetch(`${Baseurl}/auth/logout`, {
+    //       method: 'POST',
+    //       headers: {
+    //         Authorization: `Bearer ${user.token}`,
+    //       },
+    //     })
+    //   }
+    // } finally {
+    //   localStorage.removeItem('token')
+    setUser(null)
+    // }
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, signup }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   )

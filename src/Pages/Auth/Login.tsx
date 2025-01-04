@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import Input from '../../components/Input'
+import { useAuth } from '../../hooks/useAuth'
 import RoundedButton from '../../components/RoundedButton'
+import { ILoginOptions } from '../../types/interfaces'
+import { useNavigate } from 'react-router-dom'
 const Login = () => {
-  interface Iloginoptions {
-    email: string
-    password: string
-  }
-  const [loginOptions, setLoginOptions] = useState<Iloginoptions>({
+  const { login } = useAuth()
+  const navigate = useNavigate()
+  const [loginOptions, setLoginOptions] = useState<ILoginOptions>({
     email: '',
     password: '',
   })
@@ -16,6 +17,10 @@ const Login = () => {
     setLoginOptions((prev) => {
       return { ...prev, [e.target.name]: e.target.value }
     })
+  }
+  const handleClick = async () => {
+    await login(loginOptions)
+    navigate('/dashboard')
   }
   return (
     <div className='max-w-md mx-auto bg-slate-200 p-8 flex flex-col justify-center'>
@@ -31,7 +36,7 @@ const Login = () => {
           <div>Remember me</div>
           <div>Forgot Password</div>
         </div>
-        <RoundedButton label={'Submit'} onClick={() => {}} />
+        <RoundedButton label={'Submit'} onClick={() => handleClick()} />
       </div>
     </div>
   )

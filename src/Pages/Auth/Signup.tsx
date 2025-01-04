@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
 import Input from '../../components/Input'
 import RoundedButton from '../../components/RoundedButton'
+import { useAuth } from '../../hooks/useAuth'
+import { ISignupoptions } from '../../types/interfaces'
+import { useNavigate } from 'react-router-dom'
 const Signup = () => {
-  interface ISignupoptions {
-    email: string
-    password: string
-    confirmPassword: string
-    role: string
-    organization: string
-  }
+  const navigate = useNavigate()
   const [signupOptions, setLoginOptions] = useState<ISignupoptions>({
     email: '',
     password: '',
     confirmPassword: '',
     role: '',
-    organization: '',
   })
+  const { signup } = useAuth()
+  const handleClick = () => {
+    signup(signupOptions)
+    navigate('/Dashoard')
+  }
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -43,7 +44,7 @@ const Signup = () => {
           onChange={onChange}
         />
         <Input label='role' value={signupOptions.role} onChange={onChange} />
-        <RoundedButton label={'Submit'} onClick={() => {}} />
+        <RoundedButton label={'Submit'} onClick={() => handleClick()} />
       </div>
     </div>
   )

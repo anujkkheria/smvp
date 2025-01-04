@@ -1,5 +1,6 @@
 import React from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import AuthGuard from '../utils/AuthDefender'
 const Auth = React.lazy(() => import('../Pages/Auth/Auth'))
 const Login = React.lazy(() => import('../Pages/Auth/Login'))
 const Signup = React.lazy(() => import('../Pages/Auth/Signup'))
@@ -20,7 +21,11 @@ const Router = () => {
     },
     {
       path: '/DashBoard',
-      element: <DashBoard />,
+      element: (
+        <AuthGuard>
+          <DashBoard />,
+        </AuthGuard>
+      ),
     },
   ])
   return <RouterProvider router={router} />
