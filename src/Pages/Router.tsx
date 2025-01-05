@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import AuthGuard from '../utils/AuthDefender'
 const Auth = React.lazy(() => import('../Pages/Auth/Auth'))
 const Login = React.lazy(() => import('../Pages/Auth/Login'))
@@ -20,12 +20,16 @@ const Router = () => {
       ],
     },
     {
-      path: '/DashBoard',
+      path: '/dashboard',
       element: (
         <AuthGuard>
           <DashBoard />,
         </AuthGuard>
       ),
+    },
+    {
+      path: '/',
+      element: <Navigate to={'auth/login'} />,
     },
   ])
   return <RouterProvider router={router} />

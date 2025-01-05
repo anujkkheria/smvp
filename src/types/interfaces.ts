@@ -9,6 +9,7 @@ export interface ILoginOptions {
   password: string
 }
 export interface ISignupoptions {
+  name: ''
   email: string
   password: string
   confirmPassword: string

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const Signup = () => {
   const navigate = useNavigate()
   const [signupOptions, setLoginOptions] = useState<ISignupoptions>({
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -15,7 +16,7 @@ const Signup = () => {
   const { signup } = useAuth()
   const handleClick = () => {
     signup(signupOptions)
-    navigate('/Dashoard')
+    navigate('/dashboard')
   }
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,6 +29,7 @@ const Signup = () => {
     <div className='max-w-md mx-auto h-auto bg-slate-200 p-6 flex flex-col justify-center'>
       <h2 className='text-center'>Signup</h2>
       <div className='flex flex-col gap-6 justify-center'>
+        <Input label={'name'} value={signupOptions.name} onChange={onChange} />
         <Input
           label={'email'}
           value={signupOptions.email}

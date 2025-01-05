@@ -64,8 +64,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       const data = await response.json()
       setIsLoggedIn(true)
-      localStorage.setItem('token', data.token)
-      setUser(data)
+      console.log(data, data.data)
+      setUser(data.data)
     } catch (error) {
       throw new Error('Login failed')
     }
@@ -73,7 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const signup = async (signupOptions: ISignupoptions) => {
     try {
-      const response = await fetch(`${Baseurl}/auth/register`, {
+      const response = await fetch(`${Baseurl}/auth/Signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       const data = await response.json()
-      console.log(data)
+      console.log('data', data)
       // localStorage.setItem('user', .token)
       // setUser(data)
       // navigate('/dashboard')
