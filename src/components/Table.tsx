@@ -11,7 +11,6 @@ interface TableProps {
     id: number
     name: string
     role: string
-    organization: string
   }[]
   onEdit: (id: number) => void
   onDelete: (id: number) => void
@@ -19,41 +18,35 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
-  const [isAdding, setIsAdding] = useState(false)
+  // const [isAdding, setIsAdding] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
-  const [newUser, setNewUser] = useState({
-    name: '',
-    role: '',
-    organization: '',
-  })
+  // const [newUser, setNewUser] = useState({
+  //   name: '',
+  //   role: '',
+  // })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onAdd(newUser)
-    setNewUser({ name: '', role: '', organization: '' })
-    setIsAdding(false)
-  }
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   onAdd(newUser)
+  //   setNewUser({ name: '', role: '' })
+  //   setIsAdding(false)
+  // }
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setNewUser((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }))
-  }
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  // ) => {
+  //   setNewUser((prev) => ({
+  //     ...prev,
+  //     [e.target.name]: e.target.value,
+  //   }))
+  // }
 
   const exportToPDF = () => {
     const doc = new jsPDF()
     autoTable(doc, {
-      head: [['S.No', 'Name', 'Role', 'Organization']],
-      body: data.map((item, index) => [
-        index + 1,
-        item.name,
-        item.role,
-        item.organization,
-      ]),
+      head: [['S.No', 'Name', 'Role']],
+      body: data.map((item, index) => [index + 1, item.name, item.role]),
     })
     doc.save('users-data.pdf')
   }
@@ -64,7 +57,6 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
         'S.No': index + 1,
         Name: item.name,
         Role: item.role,
-        Organization: item.organization,
       }))
     )
     const workbook = XLSX.utils.book_new()
@@ -81,12 +73,9 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
 
   const exportToCSV = () => {
     const csvContent = data
-      .map(
-        (item, index) =>
-          `${index + 1},${item.name},${item.role},${item.organization}`
-      )
+      .map((item, index) => `${index + 1},${item.name},${item.role}`)
       .join('\n')
-    const header = 'S.No,Name,Role,Organization\n'
+    const header = 'S.No,Name,Role\n'
     const blob = new Blob([header + csvContent], { type: 'text/csv' })
     saveAs(blob, 'users-data.csv')
   }
@@ -105,7 +94,7 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
     <div className='space-y-4'>
       <div className='flex gap-4 justify-between'>
         <button
-          onClick={() => setIsAdding(true)}
+          onClick={() => {}}
           className='px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700'
         >
           Add User
@@ -146,7 +135,7 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
                 Role
               </th>
               <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
-                Organization
+                Password
               </th>
               <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
                 Actions
@@ -154,7 +143,7 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200'>
-            {isAdding && (
+            {/* {isAdding && (
               <tr>
                 <td className='px-6 py-4 whitespace-nowrap'>New</td>
                 <td className='px-6 py-4 whitespace-nowrap'>
@@ -210,7 +199,7 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
                   </div>
                 </td>
               </tr>
-            )}
+            )} */}
             {currentItems.map((item, index) => (
               <tr key={item.id} className='hover:bg-gray-50'>
                 <td className='px-6 py-4 whitespace-nowrap'>
@@ -219,7 +208,7 @@ const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
                 <td className='px-6 py-4 whitespace-nowrap'>{item.name}</td>
                 <td className='px-6 py-4 whitespace-nowrap'>{item.role}</td>
                 <td className='px-6 py-4 whitespace-nowrap'>
-                  {item.organization}
+                  <button>Request Reset</button>
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <div className='flex gap-2'>

@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Table from '../../components/Table'
+import Header from '../../components/Header'
 
 const Dashboard = () => {
   const [users, setUsers] = useState([
@@ -7,16 +8,46 @@ const Dashboard = () => {
       id: 1,
       name: 'John Doe',
       role: 'Admin',
-      organization: 'Tech Corp',
     },
     {
       id: 2,
       name: 'Jane Smith',
       role: 'User',
-      organization: 'Design Inc',
     },
     // Add more sample data as needed
   ])
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(5)
+  const [loading, setLoading] = useState(false)
+
+  const baseUrl = import.meta.env.VITE_BASE_URL
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true)
+      try {
+        const response = await fetch(
+          `${baseUrl}/users/getall?page=${page}&limit=${limit}`,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        const data = await response.json()
+        if (response.ok) {
+          // setUsers(data.users)
+          console.log('Dashboard', data)
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUsers()
+  }, [page, limit, baseUrl])
 
   const handleEdit = (id: number) => {
     // Implement edit functionality
@@ -40,7 +71,8 @@ const Dashboard = () => {
 
   return (
     <div className='p-6'>
-      <h1 className='text-2xl font-semibold mb-6'>Users</h1>
+      <Header />
+      <h1 className='text-2xl font-semibold mt-8 mb-6'>Users</h1>
       <Table
         data={users}
         onEdit={handleEdit}

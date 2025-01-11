@@ -22,3 +22,8 @@ export interface AuthContextType {
   logout: () => Promise<void>
   signup: (signupOptions: ISignupoptions) => Promise<void>
 }
+
+export interface IForgotPass {
+  email: string
+  newpassword: string
+}
