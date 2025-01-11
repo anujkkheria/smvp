@@ -6,7 +6,8 @@ const Auth = React.lazy(() => import('../Pages/Auth/Auth'))
 const Login = React.lazy(() => import('../Pages/Auth/Login'))
 const Signup = React.lazy(() => import('../Pages/Auth/Signup'))
 const DashBoard = React.lazy(() => import('../Pages/DashBoard/DashBoard'))
-
+const MainLayout = React.lazy(() => import('../Pages/DashBoard/Mainlayout'))
+const Profile = React.lazy(() => import('../Pages/DashBoard/Profile'))
 const Router = () => {
   const router = createBrowserRouter([
     {
@@ -25,12 +26,22 @@ const Router = () => {
       ],
     },
     {
-      path: '/dashboard',
+      path: '/app',
       element: (
         <AuthGuard>
-          <DashBoard />,
+          <MainLayout />
         </AuthGuard>
       ),
+      children: [
+        {
+          path: 'dashboard',
+          element: <DashBoard />,
+        },
+        {
+          path: 'profile',
+          element: <Profile />,
+        },
+      ],
     },
     {
       path: '/',

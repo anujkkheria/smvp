@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Table from '../../components/Table'
-import Header from '../../components/Header'
+// import Header from '../../components/Header'
 
 const Dashboard = () => {
   const [users, setUsers] = useState([
@@ -70,8 +70,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='p-6'>
-      <Header />
+    <div>
       <h1 className='text-2xl font-semibold mt-8 mb-6'>Users</h1>
       <Table
         data={users}
