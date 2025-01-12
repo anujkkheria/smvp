@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
-import Input from '../../components/Input'
+import EditableInput from '../../components/EditableInput'
 import RoundedButton from '../../components/RoundedButton'
 
 const Profile = () => {
   const { user } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
-  const [userDetails, setUserDetails] = useState({
+  const [userDetails, setUserDetails] = useState<any>({
     name: user?.name || '',
     email: user?.email || '',
     role: user?.role || '',
@@ -19,7 +19,7 @@ const Profile = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setUserDetails((prev) => ({
+    setUserDetails((prev: any) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
@@ -28,12 +28,11 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/users/update`,
+        `${import.meta.env.VITE_BASE_URL}/users/update/${user?.id}`,
         {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
           body: JSON.stringify(userDetails),
         }
@@ -55,7 +54,6 @@ const Profile = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         }
       )
@@ -82,22 +80,20 @@ const Profile = () => {
           </button>
         </div>
 
-        <div className='flex flex-wrap gap-4'>
-          <Input
-            label='name'
-            value={userDetails.name}
-            onChange={handleChange}
-          />
-          <Input
-            label='email'
-            value={userDetails.email}
-            onChange={handleChange}
-          />
-          <Input
-            label='role'
-            value={userDetails.role}
-            onChange={handleChange}
-          />
+        <div className='flex flex-wrap justify-between gap-2'>
+          {Object.keys(userDetails).map((key: string) => {
+            return (
+              <div key={key} className=' w-1/3 flex flex-col'>
+                <h3>{key}</h3>
+                <EditableInput
+                  label={key}
+                  value={userDetails[key]}
+                  onChange={handleChange}
+                  isEditing={!isEditing}
+                />
+              </div>
+            )
+          })}
         </div>
 
         {isEditing && (

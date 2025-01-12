@@ -16,6 +16,8 @@ const ForgotPassword = () => {
     })
   }
 
+  const onSubmit = () => {}
+
   return (
     <div className=' bg-white h-1/2 w-3/4 md:w-1/2 lg:w-1/3 flex flex-col items-center  border-white'>
       <h3>Forgot Password</h3>
@@ -26,7 +28,7 @@ const ForgotPassword = () => {
           label='newpassword'
           onChange={onChange}
         />
-        <RoundedButton label='Reset Password' />
+        <RoundedButton label='Reset Password' onClick={onSubmit} />
       </div>
     </div>
   )

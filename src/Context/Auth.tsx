@@ -5,6 +5,7 @@ import {
   ILoginOptions,
   ISignupoptions,
   User,
+  IForgotPass,
 } from '../types/interfaces'
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -88,7 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const data = await response.json()
       console.log('data', data)
       // localStorage.setItem('user', .token)
-      // setUser(data)
+      setUser(data.body.user)
       // navigate('/dashboard')
     } catch (error) {
       throw new Error('Registration failed')
@@ -112,9 +113,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoggedIn(false)
     // }
   }
-
+  const forgotpassword = async (Resetoptions: IForgotPass) => {
+    try {
+      const data = await fetch(`${Baseurl}/auth/forgot-password`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(Resetoptions),
+      })
+      console.log(data)
+    } catch (e) {
+      alert(`Failed to update password ${e}`)
+    }
+  }
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, login, logout, signup }}>
+    <AuthContext.Provider
+      value={{ user, isLoggedIn, login, logout, signup, forgotpassword }}
+    >
       {children}
     </AuthContext.Provider>
   )

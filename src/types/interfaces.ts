@@ -22,6 +22,7 @@ export interface AuthContextType {
   login: (loginOptions: ILoginOptions) => Promise<void>
   logout: () => Promise<void>
   signup: (signupOptions: ISignupoptions) => Promise<void>
+  forgotpassword: (Restoptions: IForgotPass) => Promise<void>
 }
 
 export interface IForgotPass {

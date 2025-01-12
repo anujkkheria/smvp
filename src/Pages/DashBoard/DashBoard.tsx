@@ -14,10 +14,30 @@ const Dashboard = () => {
       name: 'Jane Smith',
       role: 'User',
     },
+    {
+      id: 3,
+      name: 'Jane Smith',
+      role: 'User',
+    },
+    {
+      id: 4,
+      name: 'Jane Smith',
+      role: 'User',
+    },
+    {
+      id: 5,
+      name: 'Jane Smith',
+      role: 'User',
+    },
+    {
+      id: 6,
+      name: 'Jane Smith',
+      role: 'User',
+    },
     // Add more sample data as needed
   ])
   const [page, setPage] = useState(1)
-  const [limit, setLimit] = useState(5)
+  const [limit] = useState(5)
   const [loading, setLoading] = useState(false)
 
   const baseUrl = import.meta.env.VITE_BASE_URL
@@ -77,6 +97,8 @@ const Dashboard = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onAdd={handleAdd}
+        currentPage={page}
+        setCurrentPage={setPage}
       />
     </div>
   )

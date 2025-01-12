@@ -20,7 +20,7 @@ const Login = () => {
   }
   const handleClick = async () => {
     await login(loginOptions)
-    navigate('/dashboard')
+    navigate('/app/dashboard')
   }
   return (
     <div className='max-w-md mx-auto bg-slate-200 p-8 flex flex-col justify-center'>

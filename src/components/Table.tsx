@@ -15,11 +15,20 @@ interface TableProps {
   onEdit: (id: number) => void
   onDelete: (id: number) => void
   onAdd: (user: Omit<TableProps['data'][0], 'id'>) => void
+  currentPage: number
+  setCurrentPage: any
 }
 
-const Table: React.FC<TableProps> = ({ data, onEdit, onDelete, onAdd }) => {
+const Table: React.FC<TableProps> = ({
+  data,
+  onEdit,
+  onDelete,
+  onAdd,
+  currentPage,
+  setCurrentPage,
+}) => {
   // const [isAdding, setIsAdding] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
+
   const itemsPerPage = 5
   // const [newUser, setNewUser] = useState({
   //   name: '',

@@ -16,7 +16,7 @@ const Signup = () => {
   const { signup } = useAuth()
   const handleClick = () => {
     signup(signupOptions)
-    navigate('/dashboard')
+    navigate('/app/dashboard')
   }
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
