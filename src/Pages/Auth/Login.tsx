@@ -34,9 +34,14 @@ const Login = () => {
         />
         <div className='flex justify-between gap-12 px-3'>
           <div>Remember me</div>
-          <div>Forgot Password</div>
+          <div>
+            <a href='/auth/forgot-password'>Forgot Password</a>
+          </div>
         </div>
         <RoundedButton label={'Submit'} onClick={() => handleClick()} />
+        <div className='flex justify-center'>
+          <a href='/auth/signup'>Signup</a>
+        </div>
       </div>
     </div>
   )
