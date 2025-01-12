@@ -26,11 +26,17 @@ const Login = () => {
     <div className='max-w-md mx-auto bg-slate-200 p-8 flex flex-col justify-center'>
       <h2 className='text-center'>Login</h2>
       <div className='flex flex-col gap-10 justify-center'>
-        <Input label={'email'} value={loginOptions.email} onChange={onChange} />
+        <Input
+          label={'email'}
+          value={loginOptions.email}
+          onChange={onChange}
+          type={'text'}
+        />
         <Input
           label={'password'}
           value={loginOptions.password}
           onChange={onChange}
+          type='password'
         />
         <div className='flex justify-between gap-12 px-3'>
           <div>Remember me</div>

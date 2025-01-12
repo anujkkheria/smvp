@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
@@ -14,7 +14,7 @@ interface TableProps {
   }[]
   onEdit: (id: number) => void
   onDelete: (id: number) => void
-  onAdd: (user: Omit<TableProps['data'][0], 'id'>) => void
+  onAdd: () => void
   currentPage: number
   setCurrentPage: any
 }
@@ -90,10 +90,11 @@ const Table: React.FC<TableProps> = ({
   }
 
   // Calculate pagination values
-  const totalPages = Math.ceil(data.length / itemsPerPage)
+  console.log(data)
+  const totalPages = data && Math.ceil(data.length / itemsPerPage)
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem)
+  const currentItems = data && data.slice(indexOfFirstItem, indexOfLastItem)
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
@@ -103,10 +104,10 @@ const Table: React.FC<TableProps> = ({
     <div className='space-y-4'>
       <div className='flex gap-4 justify-between'>
         <button
-          onClick={() => {}}
+          onClick={() => onAdd()}
           className='px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700'
         >
-          Add User
+          Invite user
         </button>
         <div className='flex gap-4'>
           <button
@@ -209,41 +210,41 @@ const Table: React.FC<TableProps> = ({
                 </td>
               </tr>
             )} */}
-            {currentItems.map((item, index) => (
-              <tr key={item.id} className='hover:bg-gray-50'>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  {indexOfFirstItem + index + 1}
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>{item.name}</td>
-                <td className='px-6 py-4 whitespace-nowrap'>{item.role}</td>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <button>Request Reset</button>
-                </td>
-                <td className='px-6 py-4 whitespace-nowrap'>
-                  <div className='flex gap-2'>
-                    <button
-                      onClick={() => onEdit(item.id)}
-                      className='text-blue-600 hover:text-blue-800'
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => onDelete(item.id)}
-                      className='text-red-600 hover:text-red-800'
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            {currentItems &&
+              currentItems.map((item, index) => (
+                <tr key={item.id} className='hover:bg-gray-50'>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    {indexOfFirstItem + index + 1}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>{item.name}</td>
+                  <td className='px-6 py-4 whitespace-nowrap'>{item.role}</td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <button>Request Reset</button>
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <div className='flex gap-2'>
+                      <button
+                        onClick={() => onEdit(item.id)}
+                        className='text-blue-600 hover:text-blue-800'
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => onDelete(item.id)}
+                        className='text-red-600 hover:text-red-800'
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             <tr></tr>
           </tbody>
         </table>
       </div>
 
-      {/* Add pagination controls - only show if data length > itemsPerPage */}
-      {data.length > itemsPerPage && (
+      {data && data.length > itemsPerPage && (
         <div className='flex justify-center space-x-2 mt-4'>
           <button
             onClick={() => handlePageChange(currentPage - 1)}
