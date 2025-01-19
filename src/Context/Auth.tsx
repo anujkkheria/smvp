@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react'
-
+import { useSnackbar } from 'notistack'
 import {
   AuthContextType,
   ILoginOptions,
@@ -7,16 +7,18 @@ import {
   User,
   IForgotPass,
 } from '../types/interfaces'
+import { useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { enqueueSnackbar } = useSnackbar()
   const Baseurl = import.meta.env.VITE_BASE_URL
   const [user, setUser] = useState<User | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(true)
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   // useEffect(() => {
   //   // Check for stored token on mount
@@ -85,14 +87,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (!response.ok) {
         throw new Error('Registration failed')
       }
-
+      enqueueSnackbar('Successfully Created', { variant: 'success' })
       const data = await response.json()
-      console.log('data', data)
       // localStorage.setItem('user', .token)
       setUser(data.body.user)
+      navigate('/app/dashboard')
       // navigate('/dashboard')
     } catch (error) {
-      throw new Error('Registration failed')
+      enqueueSnackbar('Failed to Signup', { variant: 'error' })
     }
   }
 

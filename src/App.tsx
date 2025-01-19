@@ -1,14 +1,17 @@
 import Router from './Pages/Router'
 import { StyledEngineProvider, CssBaseline } from '@mui/material'
+import { SnackbarProvider } from 'notistack'
 import { AuthProvider } from './Context/Auth'
 const App = () => {
   return (
     <>
       <StyledEngineProvider injectFirst>
         <CssBaseline>
-          <AuthProvider>
-            <Router />
-          </AuthProvider>
+          <SnackbarProvider>
+            <AuthProvider>
+              <Router />
+            </AuthProvider>
+          </SnackbarProvider>
         </CssBaseline>
       </StyledEngineProvider>
     </>

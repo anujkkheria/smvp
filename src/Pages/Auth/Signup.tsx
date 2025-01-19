@@ -3,9 +3,8 @@ import Input from '../../components/Input'
 import RoundedButton from '../../components/RoundedButton'
 import { useAuth } from '../../hooks/useAuth'
 import { ISignupoptions } from '../../types/interfaces'
-import { useNavigate } from 'react-router-dom'
+
 const Signup = () => {
-  const navigate = useNavigate()
   const [signupOptions, setLoginOptions] = useState<ISignupoptions>({
     name: '',
     email: '',
@@ -16,7 +15,6 @@ const Signup = () => {
   const { signup } = useAuth()
   const handleClick = () => {
     signup(signupOptions)
-    navigate('/app/dashboard')
   }
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

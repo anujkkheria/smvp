@@ -3,10 +3,8 @@ import Input from '../../components/Input'
 import { useAuth } from '../../hooks/useAuth'
 import RoundedButton from '../../components/RoundedButton'
 import { ILoginOptions } from '../../types/interfaces'
-import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const { login } = useAuth()
-  const navigate = useNavigate()
   const [loginOptions, setLoginOptions] = useState<ILoginOptions>({
     email: '',
     password: '',
@@ -20,7 +18,6 @@ const Login = () => {
   }
   const handleClick = async () => {
     await login(loginOptions)
-    navigate('/app/dashboard')
   }
   return (
     <div className='max-w-md mx-auto bg-slate-200 p-8 flex flex-col justify-center'>

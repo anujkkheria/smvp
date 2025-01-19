@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import * as XLSX from 'xlsx'
@@ -28,7 +28,7 @@ const Table: React.FC<TableProps> = ({
   setCurrentPage,
 }) => {
   // const [isAdding, setIsAdding] = useState(false)
-
+  const [isEditing, setEditing] = useState<any>()
   const itemsPerPage = 5
   // const [newUser, setNewUser] = useState({
   //   name: '',
@@ -50,6 +50,9 @@ const Table: React.FC<TableProps> = ({
   //     [e.target.name]: e.target.value,
   //   }))
   // }
+  const handleEditClick = (id: any) => {
+    onEdit(id)
+  }
 
   const exportToPDF = () => {
     const doc = new jsPDF()
@@ -224,7 +227,7 @@ const Table: React.FC<TableProps> = ({
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <div className='flex gap-2'>
                       <button
-                        onClick={() => onEdit(item.id)}
+                        onClick={() => handleEditClick(item.id)}
                         className='text-blue-600 hover:text-blue-800'
                       >
                         Edit
